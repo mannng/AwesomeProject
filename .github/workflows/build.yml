@@ -47,12 +47,15 @@ jobs:
           - name: Install Firebase CLI
           run: npm install -g firebase-tools
   
-      - name: Upload to Firebase App Distribution
+      - name: Upload ios to Firebase App Distribution
         run: |
           firebase appdistribution:distribute ios/build/AwesomeProject.ipa \
             --app 1:267279363533:ios:68749d520f1004b968a884 \
             --token ${{ secrets.FIREBASE_TOKEN }} \
             --groups "testers"
+
+      - name: Upload android to Firebase App Distribution
+        run: |
           firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
            --app 1:267279363533:android:c302faf920e2cd6968a884 \
            --token ${{ secrets.FIREBASE_TOKEN }} \

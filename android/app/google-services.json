@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "267279363533",
+    "project_id": "manmantestingapp",
+    "storage_bucket": "manmantestingapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267279363533:android:c302faf920e2cd6968a884",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJAbMBHqvYZKgyfGayXYdHKRySut-ibOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -42,7 +42,7 @@ jobs:
           cd ios
           xcodebuild -workspace AwesomeProject.xcworkspace \
             -scheme AwesomeProject \
-            -sdk iphoneos \
+            -sdk iphonesimulator \
             -configuration Release \
             -archivePath AwesomeProject.xcarchive \
             archive

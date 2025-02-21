@@ -37,10 +37,22 @@ jobs:
           cd ios
           pod install
 
-      - name: Build iOS app
+      - name: Archive the app
         run: |
           cd ios
-          xcodebuild -workspace AwesomeProject.xcworkspace -scheme AwesomeProject -sdk iphonesimulator -configuration Release
+          xcodebuild -workspace AwesomeProject.xcworkspace \
+            -scheme AwesomeProject \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath AwesomeProject.xcarchive \
+            archive
+  
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath ios/AwesomeProject.xcarchive \
+            -exportPath ios/build \
+            -exportOptionsPlist ios/exportOptions.plist
 
       - name: Upload ios to Firebase App Distribution
         run: |

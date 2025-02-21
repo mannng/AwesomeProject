@@ -43,8 +43,8 @@ jobs:
           xcodebuild -workspace AwesomeProject.xcworkspace \
             -scheme AwesomeProject \
             -sdk iphoneos \
-            -configuration Release \
             -archivePath AwesomeProject.xcarchive \
+            -allowProvisioningUpdates \
             archive
   
       - name: Export IPA
@@ -52,7 +52,7 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath ios/AwesomeProject.xcarchive \
             -exportPath ios/build \
-            -exportOptionsPlist ios/exportOptions.plist
+            -exportOptionsPlist ios/ExportOptions.plist
 
       - name: Upload ios to Firebase App Distribution
         run: |

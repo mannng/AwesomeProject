@@ -37,7 +37,7 @@ jobs:
           firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
             --app 1:267279363533:android:c302faf920e2cd6968a884 \
             --token ${{ secrets.FIREBASE_TOKEN }} \
-            --groups "testers"
+            --groups "android-testers"
   
   
 

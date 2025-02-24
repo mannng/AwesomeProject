@@ -2,17 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>destination</key>
-	<string>export</string>
-	<key>method</key>
-	<string>debugging</string>
-	<key>signingStyle</key>
-	<string>automatic</string>
-	<key>stripSwiftSymbols</key>
-	<true/>
-	<key>teamID</key>
-	<string>S39R58R47Q</string>
-	<key>thinning</key>
-	<string>&lt;none&gt;</string>
+    <key>method</key>
+    <string>ad-hoc</string>  <!-- Use 'ad-hoc' for Firebase, 'app-store' for App Store -->
+    <key>teamID</key>
+    <string>S39R58R47Q</string>  <!-- Replace with your Apple Developer Team ID -->
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.manman.awesomeproject</key>
+        <string>YOUR_PROFILE_NAME</string>  <!-- Optional: Name of your provisioning profile -->
+    </dict>
+    <key>uploadBitcode</key>
+    <false/>
+    <key>compileBitcode</key>
+    <false/>
 </dict>
 </plist>

@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 23
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -36,6 +36,31 @@ jobs:
         run: |
           cd ios
           pod install
+
+      - name: Install Apple Certificate and Provisioning Profile
+        env:
+            BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+            P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+            PROVISION_PROFILE_BASE64: ${{ secrets.PROVISION_PROFILE_BASE64 }}
+            KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+            CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+            PROFILE_PATH=$RUNNER_TEMP/build_profile.mobileprovision
+            KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+  
+            echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+            echo "$PROVISION_PROFILE_BASE64" | base64 --decode -o $PROFILE_PATH
+  
+            security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+            security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+            security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+  
+            security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+            security list-keychain -d user -s $KEYCHAIN_PATH
+  
+            # Install provisioning profile
+            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+            cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
 
       - name: Archive the app
         run: |
@@ -57,7 +82,7 @@ jobs:
       - name: Upload ios to Firebase App Distribution
         run: |
           firebase appdistribution:distribute ios/build/AwesomeProject.ipa \
-            --app 1:267279363533:ios:68749d520f1004b968a884 \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
             --token ${{ secrets.FIREBASE_TOKEN }} \
             --groups "ios-testers"
 

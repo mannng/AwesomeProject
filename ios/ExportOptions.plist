@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>release-testing</string>  <!-- Use 'ad-hoc' for Firebase, 'app-store' for App Store -->
+    <string>ad-hoc</string>  <!-- Use 'ad-hoc' for Firebase, 'app-store' for App Store -->
     <key>teamID</key>
     <string>S39R58R47Q</string>  <!-- Replace with your Apple Developer Team ID -->
     <key>provisioningProfiles</key>

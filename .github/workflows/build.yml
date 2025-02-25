@@ -75,8 +75,8 @@ jobs:
                          CODE_SIGN_STYLE=Manual \
                          CODE_SIGN_IDENTITY="iPhone Distribution" \
                          PROVISIONING_PROFILE="${{ env.PROFILE_UUID }}" \
-                         archive | xcpretty
-    
+                         archive
+              ls -l $RUNNER_TEMP/
               xcodebuild -exportArchive \
                          -archivePath $RUNNER_TEMP/AwesomeProject.xcarchive \
                          -exportOptionsPlist ExportOptions.plist \

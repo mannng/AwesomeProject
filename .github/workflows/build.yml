@@ -72,6 +72,7 @@ jobs:
                          -scheme AwesomeProject \
                          -configuration Release \
                          -archivePath $RUNNER_TEMP/AwesomeProject.xcarchive \
+                         -destination "generic/platform=iOS" \
                          CODE_SIGN_STYLE=Manual \
                          CODE_SIGN_IDENTITY="iPhone Distribution" \
                          PROVISIONING_PROFILE="${{ env.PROFILE_UUID }}" \

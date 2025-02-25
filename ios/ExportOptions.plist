@@ -9,8 +9,10 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.manman.awesomeproject</key>
-        <string></string>  <!-- Optional: Name of your provisioning profile -->
+        <string>testing app</string>  <!-- Optional: Name of your provisioning profile -->
     </dict>
+    <key>signingCertificate</key>
+    <string>iPhone Distribution</string>
     <key>uploadBitcode</key>
     <false/>
     <key>compileBitcode</key>

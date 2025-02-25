@@ -50,6 +50,10 @@ jobs:
   
             echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
             echo "$PROVISION_PROFILE_BASE64" | base64 --decode -o $PROFILE_PATH
+
+            UUID=$(grep UUID -A1 -a "$PROFILE_PATH" | grep -io "[-A-F0-9]\{36\}")
+            echo "PROFILE_UUID=$UUID" >> $GITHUB_ENV
+            echo "Profile UUID: $UUID"
   
             security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
             security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
@@ -61,22 +65,22 @@ jobs:
             mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
             cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
 
-      - name: Archive the app
-        run: |
-          cd ios
-          xcodebuild -workspace AwesomeProject.xcworkspace \
-            -scheme AwesomeProject \
-            -sdk iphoneos \
-            -archivePath AwesomeProject.xcarchive \
-            -allowProvisioningUpdates \
-            archive
-  
-      - name: Export IPA
-        run: |
-          xcodebuild -exportArchive \
-            -archivePath ios/AwesomeProject.xcarchive \
-            -exportPath ios/build \
-            -exportOptionsPlist ios/ExportOptions.plist
+        - name: Build and Archive iOS App
+          working-directory: ios
+          run: |
+              xcodebuild -workspace AwesomeProject.xcworkspace \
+                         -scheme AwesomeProject \
+                         -configuration Release \
+                         -archivePath $RUNNER_TEMP/AwesomeProject.xcarchive \
+                         CODE_SIGN_STYLE=Manual \
+                         CODE_SIGN_IDENTITY="iPhone Distribution" \
+                         PROVISIONING_PROFILE="${{ env.PROFILE_UUID }}" \
+                         archive | xcpretty
+    
+              xcodebuild -exportArchive \
+                         -archivePath $RUNNER_TEMP/AwesomeProject.xcarchive \
+                         -exportOptionsPlist ExportOptions.plist \
+                         -exportPath $RUNNER_TEMP/ipa
 
       - name: Upload ios to Firebase App Distribution
         run: |

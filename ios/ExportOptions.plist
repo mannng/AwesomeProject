@@ -9,7 +9,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.manman.awesomeproject</key>
-        <string>testing app</string>  <!-- Optional: Name of your provisioning profile -->
+        <string>Manman Testing App</string>  <!-- Optional: Name of your provisioning profile -->
     </dict>
     <key>signingCertificate</key>
     <string>iPhone Distribution</string>

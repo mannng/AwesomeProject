@@ -75,12 +75,12 @@ jobs:
                          CODE_SIGN_STYLE=Manual \
                          CODE_SIGN_IDENTITY="iPhone Distribution" \
                          PROVISIONING_PROFILE="${{ env.PROFILE_UUID }}" \
-                         archive
+                         archive || { echo "Archive failed"; exit 1; }
               ls -l $RUNNER_TEMP/
               xcodebuild -exportArchive \
                          -archivePath $RUNNER_TEMP/AwesomeProject.xcarchive \
                          -exportOptionsPlist ExportOptions.plist \
-                         -exportPath $RUNNER_TEMP/ipa
+                         -exportPath $RUNNER_TEMP/ipa || { echo "Archive failed"; exit 1; }
 
       - name: Upload ios to Firebase App Distribution
         run: |

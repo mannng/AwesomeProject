@@ -65,9 +65,9 @@ jobs:
             mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
             cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
 
-        - name: Build and Archive iOS App
-          working-directory: ios
-          run: |
+      - name: Build and Archive iOS App
+        working-directory: ios
+        run: |
               xcodebuild -workspace AwesomeProject.xcworkspace \
                          -scheme AwesomeProject \
                          -configuration Release \

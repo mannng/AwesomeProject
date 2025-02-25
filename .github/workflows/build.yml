@@ -78,17 +78,20 @@ jobs:
                          PROVISIONING_PROFILE="${{ env.PROFILE_UUID }}" \
                          archive || { echo "Archive failed"; exit 1; }
               ls -l $RUNNER_TEMP/
+
               xcodebuild -exportArchive \
                          -archivePath $RUNNER_TEMP/AwesomeProject.xcarchive \
                          -exportOptionsPlist ExportOptions.plist \
                          -exportPath $RUNNER_TEMP/ipa || { echo "Archive failed"; exit 1; }
+              ls -l $RUNNER_TEMP/ipa/
 
-      - name: Upload ios to Firebase App Distribution
-        run: |
-          firebase appdistribution:distribute ios/build/AwesomeProject.ipa \
-            --app ${{ secrets.FIREBASE_APP_ID }} \
-            --token ${{ secrets.FIREBASE_TOKEN }} \
-            --groups "ios-testers"
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+                appId: ${{ secrets.FIREBASE_APP_ID }}
+                token: ${{ secrets.FIREBASE_TOKEN }}
+                file: $RUNNER_TEMP/ipa/AwesomeProject.ipa
+                groups: "ios-testers"
 
   
 

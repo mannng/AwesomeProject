@@ -86,12 +86,13 @@ jobs:
               ls -l $RUNNER_TEMP/ipa/
 
       - name: Upload to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-                appId: ${{ secrets.FIREBASE_APP_ID }}
-                token: ${{ secrets.FIREBASE_TOKEN }}
-                file: $RUNNER_TEMP/ipa/AwesomeProject.ipa
-                groups: "ios-testers"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+                firebase appdistribution:distribute $RUNNER_TEMP/ipa/AwesomeProject.ipa \
+                  --app ${{ secrets.FIREBASE_APP_ID }} \
+                  --groups "ios-testers" \
+                  --token "$FIREBASE_TOKEN"
 
   
 
